@@ -4,62 +4,394 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌾 AgriSmart - Digital Krishi Mitra</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<header>
-    <div class="container">
-        <div class="logo">
-            <i class="fas fa-tractor"></i>
-            <span>AgriSmart</span>
-            <i class="fas fa-seedling"></i>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-tractor"></i>
+                <span>AgriSmart</span>
+                <i class="fas fa-seedling"></i>
+            </div>
+            <p class="tagline">Your Digital Krishi Mitra - Bridging Technology and Farming for Better Harvests</p>
         </div>
-        <p class="tagline">Your Digital Krishi Mitra</p>
+    </header>
+    
+    <div class="container">
+        <div class="language-toggle">
+            <button class="lang-btn active" onclick="changeLanguage('en')">
+                <i class="fas fa-language"></i> English
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('hi')">
+                <i class="fas fa-language"></i> हिंदी
+            </button>
+            <button class="lang-btn" onclick="changeLanguage('mr')">
+                <i class="fas fa-language"></i> मराठी
+            </button>
+        </div>
     </div>
-</header>
-
-<div class="container">
-
-    <!-- Crop Calendar -->
-    <div class="feature-card">
-        <h3>Crop Calendar</h3>
-
-        <select id="crop-select">
-            <option value="">Select Crop</option>
-            <option value="wheat">Wheat</option>
-            <option value="rice">Rice</option>
-        </select>
-
-        <button onclick="generateCalendar()">Generate Plan</button>
-
-        <div id="calendar-output"></div>
+    
+    <div class="container">
+        <div class="reaction-buttons">
+            <button class="reaction-btn like" onclick="trackReaction('like')">
+                <i class="fas fa-thumbs-up"></i>
+                <span>Like</span>
+            </button>
+            <button class="reaction-btn helpful" onclick="trackReaction('helpful')">
+                <i class="fas fa-hands-helping"></i>
+                <span>Helpful</span>
+            </button>
+            <button class="reaction-btn share" onclick="trackReaction('share')">
+                <i class="fas fa-share-alt"></i>
+                <span>Share</span>
+            </button>
+        </div>
     </div>
-
-    <!-- ROI Calculator -->
-    <div class="feature-card">
-        <h3>Profit Calculator</h3>
-
-        <input type="number" id="land-area" placeholder="Land Area">
-        <input type="number" id="input-cost" placeholder="Cost">
-        <input type="number" id="expected-yield" placeholder="Yield">
-        <input type="number" id="market-price" placeholder="Price">
-
-        <button onclick="calculateROI()">Calculate</button>
-
-        <h4 id="profit-result">₹0</h4>
+    
+    <div class="container">
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                <h3>Crop Calendar</h3>
+                <p>Get month-wise guidance for sowing, irrigation, and harvesting based on your selected crop.</p>
+                <div class="calendar-controls">
+                    <select id="crop-select">
+                        <option value="">Select Crop</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="rice">Rice</option>
+                        <option value="cotton">Cotton</option>
+                        <option value="sugarcane">Sugarcane</option>
+                        <option value="soybean">Soybean</option>
+                        <option value="maize">Maize</option>
+                    </select>
+                    <button onclick="generateCalendar()">
+                        <i class="fas fa-calendar-check"></i> Generate Plan
+                    </button>
+                </div>
+                <div class="calendar-output" id="calendar-output">
+                    <p>Select a crop to see the farming calendar.</p>
+                </div>
+                <button class="secondary" onclick="printCalendar()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-print"></i> Print Calendar
+                </button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tint"></i></div>
+                <h3>Irrigation Tips</h3>
+                <p>Water your crops efficiently with science-backed recommendations.</p>
+                <div id="irrigation-tips">
+                    <div class="month-card">
+                        <i class="fas fa-sun"></i>
+                        <div>
+                            <strong>Morning Watering:</strong> Best time is 6-10 AM to reduce evaporation
+                        </div>
+                    </div>
+                    <div class="month-card">
+                        <i class="fas fa-leaf"></i>
+                        <div>
+                            <strong>Drip Irrigation:</strong> Saves 30-50% water for crops like cotton
+                        </div>
+                    </div>
+                </div>
+                <button onclick="showMoreTips()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-plus-circle"></i> More Tips
+                </button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                <h3>Profit Calculator</h3>
+                <p>Estimate your profits by calculating costs and expected yield.</p>
+                <div class="calculator">
+                    <div class="calculator-input">
+                        <div class="input-group">
+                            <label for="land-area"><i class="fas fa-map-marked-alt"></i> Land Area (acres)</label>
+                            <input type="number" id="land-area" value="1" min="0.1" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label for="input-cost"><i class="fas fa-rupee-sign"></i> Input Cost (₹/acre)</label>
+                            <input type="number" id="input-cost" value="15000">
+                        </div>
+                        <div class="input-group">
+                            <label for="expected-yield"><i class="fas fa-weight-hanging"></i> Expected Yield (kg/acre)</label>
+                            <input type="number" id="expected-yield" value="2000">
+                        </div>
+                        <div class="input-group">
+                            <label for="market-price"><i class="fas fa-tag"></i> Market Price (₹/kg)</label>
+                            <input type="number" id="market-price" value="25">
+                        </div>
+                        <button onclick="calculateROI()">
+                            <i class="fas fa-calculator"></i> Calculate
+                        </button>
+                    </div>
+                    <div class="calculator-result">
+                        <h4>Your Estimated Profit</h4>
+                        <div class="result-value" id="profit-result">₹0</div>
+                        <div id="roi-details">
+                            <div class="result-detail">
+                                <span>Total Cost:</span>
+                                <span id="total-cost">₹0</span>
+                            </div>
+                            <div class="result-detail">
+                                <span>Total Revenue:</span>
+                                <span id="total-revenue">₹0</span>
+                            </div>
+                            <div class="result-detail">
+                                <span>Profit per acre:</span>
+                                <span id="profit-per-acre">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-cloud-sun"></i></div>
+                <h3>Weather Forecast</h3>
+                <div class="weather-widget">
+                    <div id="weather-location"><i class="fas fa-map-marker-alt"></i> Nashik, Maharashtra</div>
+                    <div class="weather-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="weather-temp" id="weather-temp">28°C</div>
+                    <div id="weather-desc">Partly Cloudy</div>
+                    <div id="weather-rain"><i class="fas fa-umbrella"></i> Rain probability: 20%</div>
+                    <small>Data from IMD India</small>
+                </div>
+                <button onclick="refreshWeather()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-sync-alt"></i> Refresh Weather
+                </button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-recycle"></i></div>
+                <h3>Eco Advisory</h3>
+                <p>Natural alternatives to chemical pesticides and fertilizers:</p>
+                <div id="eco-tips">
+                    <div class="month-card">
+                        <i class="fas fa-bug"></i>
+                        <div>
+                            <strong>Neem Spray:</strong> Mix 50ml neem oil in 1L water + soap
+                        </div>
+                    </div>
+                    <div class="month-card">
+                        <i class="fas fa-tree"></i>
+                        <div>
+                            <strong>Compost Tea:</strong> Soak compost in water for 3 days, then spray
+                        </div>
+                    </div>
+                </div>
+                <button onclick="showMoreEcoTips()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-plus-circle"></i> More Eco Tips
+                </button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3>Government Schemes</h3>
+                <p>Financial support programs for Indian farmers:</p>
+                <div id="schemes-list">
+                    <div class="scheme-card">
+                        <h4><i class="fas fa-hand-holding-usd"></i> PM Kisan Samman Nidhi</h4>
+                        <div class="scheme-meta">
+                            <span><i class="fas fa-rupee-sign"></i> ₹6,000/year</span>
+                            <span><i class="fas fa-users"></i> All farmers</span>
+                        </div>
+                        <p>Direct benefit transfer in 3 installments</p>
+                        <button class="apply-btn" onclick="showSchemeDetails('pm-kisan')">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                </div>
+                <button onclick="showMoreSchemes()" style="margin-top: 15px; width: 100%;">
+                    <i class="fas fa-search"></i> Find More Schemes
+                </button>
+            </div>
+        </section>
+        
+        <section class="schemes-container">
+            <h2><i class="fas fa-landmark"></i> Government Schemes for Farmers</h2>
+            <p>Explore financial support and subsidy programs from Central and State Governments</p>
+            
+            <div class="scheme-tabs">
+                <div class="scheme-tab active" onclick="changeSchemeTab('all')">All Schemes</div>
+                <div class="scheme-tab" onclick="changeSchemeTab('central')">Central Govt</div>
+                <div class="scheme-tab" onclick="changeSchemeTab('state')">State Govt</div>
+                <div class="scheme-tab" onclick="changeSchemeTab('subsidy')">Subsidies</div>
+                <div class="scheme-tab" onclick="changeSchemeTab('loan')">Loans</div>
+            </div>
+            
+            <div class="scheme-content active" id="all-schemes">
+                <div class="scheme-card">
+                    <h4><i class="fas fa-hand-holding-usd"></i> PM Kisan Samman Nidhi</h4>
+                    <div class="scheme-meta">
+                        <span><i class="fas fa-rupee-sign"></i> ₹6,000/year</span>
+                        <span><i class="fas fa-users"></i> All farmers</span>
+                        <span><i class="fas fa-calendar-alt"></i> Year-round</span>
+                    </div>
+                    <p>Income support scheme providing ₹6,000 per year in three equal installments to all landholding farmer families.</p>
+                    <button class="apply-btn" onclick="showSchemeDetails('pm-kisan')">
+                        <i class="fas fa-info-circle"></i> More Details
+                    </button>
+                    <button class="apply-btn" style="background: var(--water-blue);">
+                        <i class="fas fa-external-link-alt"></i> Apply Online
+                    </button>
+                </div>
+                
+                <div class="scheme-card">
+                    <h4><i class="fas fa-tint"></i> Micro Irrigation Fund</h4>
+                    <div class="scheme-meta">
+                        <span><i class="fas fa-rupee-sign"></i> Up to 55% subsidy</span>
+                        <span><i class="fas fa-users"></i> Small farmers</span>
+                        <span><i class="fas fa-calendar-alt"></i> Till 2025</span>
+                    </div>
+                    <p>Provides financial assistance for drip and sprinkler irrigation systems with up to 55% subsidy for small farmers.</p>
+                    <button class="apply-btn" onclick="showSchemeDetails('micro-irrigation')">
+                        <i class="fas fa-info-circle"></i> More Details
+                    </button>
+                </div>
+                
+                <div class="scheme-card">
+                    <h4><i class="fas fa-credit-card"></i> Kisan Credit Card</h4>
+                    <div class="scheme-meta">
+                        <span><i class="fas fa-rupee-sign"></i> Up to ₹3 lakh</span>
+                        <span><i class="fas fa-users"></i> All farmers</span>
+                        <span><i class="fas fa-percentage"></i> 2% interest</span>
+                    </div>
+                    <p>Provides farmers with timely access to credit at concessional interest rate of 2% per annum.</p>
+                    <button class="apply-btn" onclick="showSchemeDetails('kisan-credit')">
+                        <i class="fas fa-info-circle"></i> More Details
+                    </button>
+                </div>
+            </div>
+            
+            <div class="scheme-content" id="central-schemes">
+                </div>
+            
+            <div class="scheme-content" id="state-schemes">
+                </div>
+            
+            <button onclick="showAllSchemes()" style="margin-top: 20px; width: 100%;">
+                <i class="fas fa-book-open"></i> View Complete Scheme Directory
+            </button>
+        </section>
+        
+        <section class="testimonials">
+            <h2><i class="fas fa-quote-left"></i> Success Stories</h2>
+            <p>Hear from farmers who transformed their farming with AgriSmart</p>
+            
+            <div class="testimonial-card">
+                <p>"AgriSmart helped me plan my cotton farming perfectly. The irrigation tips saved me 30% water and increased yield by 20%. The ROI calculator showed me exactly where to invest for maximum profit."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">RS</div>
+                    <div>
+                        <h4>Rajesh Sawant</h4>
+                        <small>Cotton Farmer, Maharashtra</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p>"The government scheme alerts helped me get ₹15,000 subsidy for drip irrigation. I wouldn't have known about this without AgriSmart. The Marathi language option makes it easy for my parents to use too."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">PP</div>
+                    <div>
+                        <h4>Priya Patil</h4>
+                        <small>Vegetable Grower, Nashik</small>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="shareYourStory()" style="margin-top: 20px; width: 100%;">
+                <i class="fas fa-pen-alt"></i> Share Your Success Story
+            </button>
+        </section>
+        
+        <section style="margin: 50px 0; text-align: center; background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
+            <h2><i class="fas fa-headset"></i> Need Help? Contact Our Kisan Mitra</h2>
+            <p style="margin: 20px 0;">Our agricultural experts are available to answer your questions</p>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0;">
+                <a href="https://wa.me/919876543210" style="text-decoration: none;">
+                    <button style="background: #25D366; display: flex; align-items: center; gap: 10px;">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Help
+                    </button>
+                </a>
+                
+                <button onclick="callKisanMitra()" style="background: var(--farm-green); display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-phone-alt"></i> Call Kisan Mitra (10AM-6PM)
+                </button>
+                
+                <button onclick="openFeedbackForm()" style="background: var(--sun-yellow); color: var(--dark-text); display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-comment-dots"></i> Send Feedback
+                </button>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>Visit Our Farmer Training Center</h3>
+                <p><i class="fas fa-map-marker-alt"></i> AgriSmart Center, College Road, Nashik, Maharashtra</p>
+                <button onclick="openMap()" style="margin-top: 15px; background: var(--water-blue); display: flex; align-items: center; gap: 10px; margin: 0 auto;">
+                    <i class="fas fa-directions"></i> Get Directions
+                </button>
+            </div>
+        </section>
     </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AgriSmart</h3>
+                    <p>Bridging technology and farming to empower India's agricultural community with smart solutions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-seedling"></i> Crop Calendar</a></li>
+                        <li><a href="#"><i class="fas fa-calculator"></i> Profit Calculator</a></li>
+                        <li><a href="#"><i class="fas fa-tint"></i> Irrigation Guide</a></li>
+                        <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Govt Schemes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-book"></i> Farming Guides</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> Tutorial Videos</a></li>
+                        <li><a href="#"><i class="fas fa-map-marked-alt"></i> Weather Maps</a></li>
+                        <li><a href="#"><i class="fas fa-download"></i> Mobile App</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-phone-alt"></i> +91 9876543210</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> help@agrismart.in</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Nashik, Maharashtra</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 9AM-6PM</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 AgriSmart. Developed for Community Engagement Project.</p>
+                <p>In partnership with Maharashtra Krishi Vikas Kendra</p>
+            </div>
+        </div>
+    </footer>
 
-</div>
-
-<!-- JS -->
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
