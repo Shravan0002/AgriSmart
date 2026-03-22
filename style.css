@@ -1,0 +1,40 @@
+body {
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    background: #f9f9f9;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+header {
+    background: #27ae60;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+button {
+    background: #27ae60;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3498db;
+}

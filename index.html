@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 AgriSmart - Digital Krishi Mitra</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-tractor"></i>
+            <span>AgriSmart</span>
+            <i class="fas fa-seedling"></i>
+        </div>
+        <p class="tagline">Your Digital Krishi Mitra</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Crop Calendar -->
+    <div class="feature-card">
+        <h3>Crop Calendar</h3>
+
+        <select id="crop-select">
+            <option value="">Select Crop</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+        </select>
+
+        <button onclick="generateCalendar()">Generate Plan</button>
+
+        <div id="calendar-output"></div>
+    </div>
+
+    <!-- ROI Calculator -->
+    <div class="feature-card">
+        <h3>Profit Calculator</h3>
+
+        <input type="number" id="land-area" placeholder="Land Area">
+        <input type="number" id="input-cost" placeholder="Cost">
+        <input type="number" id="expected-yield" placeholder="Yield">
+        <input type="number" id="market-price" placeholder="Price">
+
+        <button onclick="calculateROI()">Calculate</button>
+
+        <h4 id="profit-result">₹0</h4>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="script.js"></script>
+
+</body>
+</html>
